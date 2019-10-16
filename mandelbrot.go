@@ -12,11 +12,14 @@ import (
 func buildSimpleShots(shots int) {
 	for sIndex := 0; sIndex < shots; sIndex++ {
 		z0 := complex(0, float64(sIndex)/float64(shots))
-		buildMandelbrot(z0, sIndex)
+		img := buildMandelbrot(z0)
+		f, _ := os.Create(fmt.Sprintf("mandelbrot%v.png", sIndex))
+		png.Encode(f, img)
+		fmt.Printf("File mandelbrot%v.png created.\n", sIndex)
 	}
 }
 
-func buildMandelbrot(z0 complex128, index int) {
+func buildMandelbrot(z0 complex128) *image.RGBA {
 	const (
 		xmin, ymin, xmax, ymax = -1.5, -0.5, -0.5, +0.5
 		width, height          = 1024 * 2, 1024 * 2
@@ -32,8 +35,7 @@ func buildMandelbrot(z0 complex128, index int) {
 		}
 	}
 
-	f, _ := os.Create(fmt.Sprintf("mandelbrot%v.png", index))
-	png.Encode(f, img)
+	return img
 }
 
 func mandelbrotPoint(z complex128, z0 complex128) color.Color {

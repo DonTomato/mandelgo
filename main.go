@@ -11,7 +11,6 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	buildSimpleShots(10)
-	//buildMandelbrot(0+0i, 0)
 
 	fmt.Println("Process finished.")
 
