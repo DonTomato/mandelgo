@@ -2,28 +2,24 @@ package main
 
 import "sync"
 
-// ConcurrentQueue - thread safe queue
-type ConcurrentQueue struct {
+type concurrentQueue struct {
 	sync.Mutex
-	Items []interface{}
+	Items []*initialCondition
 }
 
-// NewQueue - constructor
-func NewQueue(capacity int) *ConcurrentQueue {
-	return &ConcurrentQueue{
-		Items: make([]interface{}, 0, capacity),
+func newQueue(capacity int) *concurrentQueue {
+	return &concurrentQueue{
+		Items: make([]*initialCondition, 0, capacity),
 	}
 }
 
-// Push - push item to the concurrent queue
-func (q *ConcurrentQueue) Push(item interface{}) {
+func (q *concurrentQueue) push(item *initialCondition) {
 	q.Lock()
 	defer q.Unlock()
 	q.Items = append(q.Items, item)
 }
 
-// Pop - pop item from concurrent queue
-func (q *ConcurrentQueue) Pop() interface{} {
+func (q *concurrentQueue) pop() *initialCondition {
 	q.Lock()
 	defer q.Unlock()
 	if len(q.Items) == 0 {
