@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"runtime"
 )
 
@@ -10,7 +11,11 @@ type initialCondition struct {
 }
 
 func generate() {
-	const number = 255
+	const number = 20
+
+	if _, err := os.Stat("data"); os.IsNotExist(err) {
+		os.Mkdir("data", os.ModePerm)
+	}
 
 	queue := newQueue(number)
 	for i := 0; i < number; i++ {
