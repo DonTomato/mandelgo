@@ -1,3 +1,6 @@
+Run the command Go: Install/Update Tools, select dlv, press Ok to install/update delve
+
+
 Windows 
   go build -o .\..\exec
 
