@@ -6,6 +6,7 @@ import (
 	"image/color"
 	"image/jpeg"
 	"image/png"
+	"math"
 	"math/cmplx"
 	"os"
 	"path/filepath"
@@ -68,10 +69,10 @@ func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 		zn := cmplx.Abs(v)
 		if zn > 2 {
 
-			return color.Gray{255 - contrast*n}
+			//return color.Gray{255 - contrast*n}
 
-			// nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
-			// return color.RGBA{150 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
+			nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
+			return color.RGBA{20 + nsmooth*n/2, 10 + nsmooth*n, 0 + nsmooth*n, 255 - contrast*n}
 
 			// r2 := math.Pow(cmplx.Abs(v), 2)
 

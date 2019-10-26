@@ -22,7 +22,11 @@ func generate() {
 
 	queue := newQueue(filesCount)
 	for i := 0; i < filesCount; i++ {
-		queue.push(&initialCondition{z0: complex(0, float64(i)/float64(filesCount)), index: uint16(i)})
+
+		//k := float64(i) / float64(filesCount)
+		k := r0 + (r1-r0)*float64(i)/float64(filesCount)
+
+		queue.push(&initialCondition{z0: complex(0, k), index: uint16(i)})
 	}
 	done := make(chan uint8)
 	//fmt.Printf("Slice: %v\n", queue.Items)
