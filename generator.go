@@ -11,7 +11,7 @@ type initialCondition struct {
 }
 
 func generate() {
-	const number = 20
+	const number = 300
 
 	if _, err := os.Stat("data"); os.IsNotExist(err) {
 		os.Mkdir("data", os.ModePerm)

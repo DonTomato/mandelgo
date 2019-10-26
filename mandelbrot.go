@@ -36,8 +36,8 @@ func buildSimpleShots(shots int) {
 
 func buildMandelbrot(z0 complex128) *image.RGBA {
 	const (
-		//xmin, ymin, xmax, ymax = 0.0, -1, 0.5, -0.2
-		xmin, ymin, xmax, ymax = -2, -1.5, 1, 1.5
+		xmin, ymin, xmax, ymax = 0.0, -0.7, 0.5, -0.4
+		//xmin, ymin, xmax, ymax = -2, -1.5, 1, 1.5
 		//width, height          = 1024, 1024
 	)
 
@@ -59,16 +59,20 @@ func buildMandelbrot(z0 complex128) *image.RGBA {
 
 func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 	const (
-		iterations = 200
-		contrast   = 15
+		iterations = 255
+		contrast   = 5
 	)
 
 	var v = z0
 	for n := uint8(0); n < iterations; n++ {
 		v = v*v + z
-		if cmplx.Abs(v) > 2 {
+		zn := cmplx.Abs(v)
+		if zn > 2 {
 
 			//return color.Gray{255 - contrast*n}
+
+			nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
+			return color.RGBA{110 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
 
 			// r2 := math.Pow(cmplx.Abs(v), 2)
 
