@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 )
 
-func buildFile(z0 complex128, index uint8) {
+func buildFile(z0 complex128, index uint16) {
 	img := buildMandelbrot(z0)
 	fileName := filepath.Join("data", fmt.Sprintf("mandelbrot%v.jpg", index))
 	f, _ := os.Create(fileName)
@@ -35,15 +35,12 @@ func buildSimpleShots(shots int) {
 	}
 }
 
-func buildMandelbrot(z0 complex128) *image.RGBA {
-	const (
-		xmin, ymin, xmax, ymax = 0.0, -0.7, 0.5, -0.4
-		//xmin, ymin, xmax, ymax = -2, -1.5, 1, 1.5
-		//width, height          = 1024, 1024
-	)
+func getHeigh() int {
+	return int(math.Trunc((ymax - ymin) * float64(width) / (xmax - xmin)))
+}
 
-	width := 2048
-	height := int(math.Trunc((ymax - ymin) * float64(2048) / (xmax - xmin)))
+func buildMandelbrot(z0 complex128) *image.RGBA {
+	height := getHeigh()
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
@@ -60,8 +57,8 @@ func buildMandelbrot(z0 complex128) *image.RGBA {
 
 func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 	const (
-		iterations = 255
-		contrast   = 5
+		iterations = 200
+		contrast   = 15
 	)
 
 	var v = z0
@@ -70,10 +67,10 @@ func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 		zn := cmplx.Abs(v)
 		if zn > 2 {
 
-			//return color.Gray{255 - contrast*n}
+			return color.Gray{255 - contrast*n}
 
-			nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
-			return color.RGBA{150 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
+			// nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
+			// return color.RGBA{150 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
 
 			// r2 := math.Pow(cmplx.Abs(v), 2)
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"runtime"
 
 	"github.com/icza/mjpeg"
@@ -11,19 +12,17 @@ import (
 
 type initialCondition struct {
 	z0    complex128
-	index uint8
+	index uint16
 }
-
-const number = 250
 
 func generate() {
 	if _, err := os.Stat("data"); os.IsNotExist(err) {
 		os.Mkdir("data", os.ModePerm)
 	}
 
-	queue := newQueue(number)
-	for i := 0; i < number; i++ {
-		queue.push(&initialCondition{z0: complex(0, float64(i)/float64(number)), index: uint8(i)})
+	queue := newQueue(filesCount)
+	for i := 0; i < filesCount; i++ {
+		queue.push(&initialCondition{z0: complex(0, float64(i)/float64(filesCount)), index: uint16(i)})
 	}
 	done := make(chan uint8)
 	//fmt.Printf("Slice: %v\n", queue.Items)
@@ -43,11 +42,11 @@ func generate() {
 }
 
 func generateAvi() {
-	aw, err := mjpeg.New("mandelbrot.avi", 2048, 1228, 60)
+	aw, err := mjpeg.New(filepath.Join("data", "mandelbrot.avi"), width, int32(getHeigh()), 20)
 	checkErr(err)
 
-	for i := 0; i < number; i++ {
-		data, err := ioutil.ReadFile(fmt.Sprintf("./mandelbrot%v.jpg", i))
+	for i := 0; i < filesCount; i++ {
+		data, err := ioutil.ReadFile(filepath.Join("data", fmt.Sprintf("./mandelbrot%v.jpg", i)))
 		checkErr(err)
 		aw.AddFrame(data)
 	}
