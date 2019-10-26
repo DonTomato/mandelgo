@@ -42,7 +42,7 @@ func generate() {
 }
 
 func generateAvi() {
-	aw, err := mjpeg.New(filepath.Join("data", "mandelbrot.avi"), width, int32(getHeigh()), 20)
+	aw, err := mjpeg.New(filepath.Join("data", "mandelbrot.avi"), width, height, 20)
 	checkErr(err)
 
 	for i := 0; i < filesCount; i++ {

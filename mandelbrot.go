@@ -6,7 +6,6 @@ import (
 	"image/color"
 	"image/jpeg"
 	"image/png"
-	"math"
 	"math/cmplx"
 	"os"
 	"path/filepath"
@@ -35,18 +34,20 @@ func buildSimpleShots(shots int) {
 	}
 }
 
-func getHeigh() int {
-	return int(math.Trunc((ymax - ymin) * float64(width) / (xmax - xmin)))
-}
+// func getHeigh() int {
+// 	return int(math.Trunc((ymax - ymin) * float64(width) / (xmax - xmin)))
+// }
 
 func buildMandelbrot(z0 complex128) *image.RGBA {
-	height := getHeigh()
+	//height := getHeigh()
+
+	ySize := (height * xSize) / width
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
-		y := float64(py)/float64(height)*(ymax-ymin) + ymin
+		y := float64(py)/float64(height)*ySize + yLeft
 		for px := 0; px < width; px++ {
-			x := float64(px)/float64(width)*(xmax-xmin) + xmin
+			x := float64(px)/float64(width)*xSize + xLeft
 			z := complex(x, y)
 			img.Set(px, py, mandelbrotPoint(z, z0))
 		}

@@ -8,12 +8,16 @@ import (
 )
 
 const (
-	xmin, ymin, xmax, ymax = 0.0, -0.7, 0.5, -0.4
-	//xmin, ymin, xmax, ymax = -1.5, -0.8, 0, 0.3
+	//xmin, ymin, xmax, ymax = 0.0, -0.7, 0.5, -0.4
+	xLeft, yLeft = -1, -0.3
+	xSize        = 0.33
+
+	width, height = 2560, 1140
 )
 
 const filesCount = 1000
-const width = 3072
+
+//const width = 3072
 
 func main() {
 	fmt.Println("Mandelbrot set experiments")
@@ -21,10 +25,11 @@ func main() {
 
 	start := time.Now()
 
-	fmt.Println(os.Args[0])
-	dir, _ := os.Getwd()
-	fmt.Println(dir)
+	//fmt.Println(os.Args[0])
+	//dir, _ := os.Getwd()
+	//fmt.Println(dir)
 
+	//if len(os.Args) > 1 && os.Args[1] =
 	generate()
 	generateAvi()
 
