@@ -5,4 +5,4 @@ Windows
   go build -o .\..\exec
 
 unix
-  go build -o ./../exec/mandelbrot
+  go build -o ./data/mandelbrot
