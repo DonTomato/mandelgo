@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"image/color"
+	"image/jpeg"
 	"image/png"
 	"math"
 	"math/cmplx"
@@ -13,13 +14,13 @@ import (
 
 func buildFile(z0 complex128, index uint8) {
 	img := buildMandelbrot(z0)
-	fileName := filepath.Join("data", fmt.Sprintf("mandelbrot%v.png", index))
+	fileName := filepath.Join("data", fmt.Sprintf("mandelbrot%v.jpg", index))
 	f, _ := os.Create(fileName)
-	png.Encode(f, img)
+	//png.Encode(f, img)
 
-	// var opt jpeg.Options
-	// opt.Quality = 80
-	// jpeg.Encode(f, img, &opt)
+	var opt jpeg.Options
+	opt.Quality = 80
+	jpeg.Encode(f, img, &opt)
 
 	fmt.Printf("File %v created.\n", fileName)
 }
@@ -28,7 +29,7 @@ func buildSimpleShots(shots int) {
 	for sIndex := 0; sIndex < shots; sIndex++ {
 		z0 := complex(0, float64(sIndex)/float64(shots))
 		img := buildMandelbrot(z0)
-		f, _ := os.Create(filepath.Join("data", fmt.Sprintf("mandelbrot%v.png", sIndex)))
+		f, _ := os.Create(filepath.Join("data", fmt.Sprintf("mandelbrot%v.jpg", sIndex)))
 		png.Encode(f, img)
 		fmt.Printf("File mandelbrot%v.png created.\n", sIndex)
 	}
@@ -72,7 +73,7 @@ func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 			//return color.Gray{255 - contrast*n}
 
 			nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
-			return color.RGBA{110 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
+			return color.RGBA{150 + nsmooth, 0, 54 + nsmooth, 230 - contrast*n}
 
 			// r2 := math.Pow(cmplx.Abs(v), 2)
 

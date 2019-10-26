@@ -12,8 +12,11 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	start := time.Now()
-	//buildSimpleShots(1)
+
+	fmt.Println(os.Args[0])
+
 	generate()
+	generateAvi()
 
 	fmt.Printf("Process finished. Time: %v\n", time.Now().Sub(start))
 

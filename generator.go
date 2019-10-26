@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"os"
 	"runtime"
+
+	"github.com/icza/mjpeg"
 )
 
 type initialCondition struct {
@@ -10,9 +14,9 @@ type initialCondition struct {
 	index uint8
 }
 
-func generate() {
-	const number = 300
+const number = 250
 
+func generate() {
 	if _, err := os.Stat("data"); os.IsNotExist(err) {
 		os.Mkdir("data", os.ModePerm)
 	}
@@ -38,9 +42,26 @@ func generate() {
 	}
 }
 
+func generateAvi() {
+	aw, err := mjpeg.New("mandelbrot.avi", 2048, 1228, 60)
+	checkErr(err)
+
+	for i := 0; i < number; i++ {
+		data, err := ioutil.ReadFile(fmt.Sprintf("./mandelbrot%v.jpg", i))
+		checkErr(err)
+		aw.AddFrame(data)
+	}
+}
+
 func process(queue *concurrentQueue) {
 	for item := queue.pop(); item != nil; item = queue.pop() {
 		//fmt.Printf("Item: %v;\n", item)
 		buildFile(item.z0, item.index)
+	}
+}
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
 	}
 }
