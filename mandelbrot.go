@@ -46,9 +46,9 @@ func buildMandelbrot(z0 complex128) *image.RGBA {
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
-		y := float64(py)/float64(height)*ySize + yLeft
+		y := float64(py)/float64(height)*ySize + (yCenter - xSize*float64(height)/(2*float64(width)))
 		for px := 0; px < width; px++ {
-			x := float64(px)/float64(width)*xSize + xLeft
+			x := float64(px)/float64(width)*xSize + (xCenter - xSize/2)
 			z := complex(x, y)
 			img.Set(px, py, mandelbrotPoint(z, z0))
 		}

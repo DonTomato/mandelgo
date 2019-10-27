@@ -9,12 +9,12 @@ import (
 
 const (
 	//xmin, ymin, xmax, ymax = 0.0, -0.7, 0.5, -0.4
-	xLeft, yLeft = -0.78, -0.3
-	xSize        = 0.11
+	xCenter, yCenter = 0.1, -0.7
+	xSize            = 0.8
 
-	width, height = 2560, 1140
+	width, height = 2560, 1440
 
-	r0, r1 = 0.46, 0.72
+	r0, r1 = 0.0, 1.5
 )
 
 const filesCount = 1000
