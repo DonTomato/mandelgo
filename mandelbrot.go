@@ -13,7 +13,10 @@ import (
 )
 
 func buildFile(z0 complex128, index uint16) {
-	img := buildMandelbrot(z0)
+
+	xSizeV := xSize - xSize*(0.90)*float64(index)/float64(filesCount)
+
+	img := buildMandelbrot(z0, xSizeV)
 	fileName := filepath.Join("data", fmt.Sprintf("mandelbrot%v.jpg", index))
 	f, _ := os.Create(fileName)
 	//png.Encode(f, img)
@@ -28,7 +31,7 @@ func buildFile(z0 complex128, index uint16) {
 func buildSimpleShots(shots int) {
 	for sIndex := 0; sIndex < shots; sIndex++ {
 		z0 := complex(0, float64(sIndex)/float64(shots))
-		img := buildMandelbrot(z0)
+		img := buildMandelbrot(z0, xSize)
 		f, _ := os.Create(filepath.Join("data", fmt.Sprintf("mandelbrot%v.jpg", sIndex)))
 		png.Encode(f, img)
 		fmt.Printf("File mandelbrot%v.png created.\n", sIndex)
@@ -39,16 +42,16 @@ func buildSimpleShots(shots int) {
 // 	return int(math.Trunc((ymax - ymin) * float64(width) / (xmax - xmin)))
 // }
 
-func buildMandelbrot(z0 complex128) *image.RGBA {
+func buildMandelbrot(z0 complex128, xSizeV float64) *image.RGBA {
 	//height := getHeigh()
 
-	ySize := (height * xSize) / width
+	ySize := (height * xSizeV) / width
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
-		y := float64(py)/float64(height)*ySize + (yCenter - xSize*float64(height)/(2*float64(width)))
+		y := float64(py)/float64(height)*ySize + (yCenter - xSizeV*float64(height)/(2*float64(width)))
 		for px := 0; px < width; px++ {
-			x := float64(px)/float64(width)*xSize + (xCenter - xSize/2)
+			x := float64(px)/float64(width)*xSizeV + (xCenter - xSizeV/2)
 			z := complex(x, y)
 			img.Set(px, py, mandelbrotPoint(z, z0))
 		}
