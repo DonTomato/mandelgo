@@ -38,13 +38,7 @@ func buildSimpleShots(shots int) {
 	}
 }
 
-// func getHeigh() int {
-// 	return int(math.Trunc((ymax - ymin) * float64(width) / (xmax - xmin)))
-// }
-
 func buildMandelbrot(z0 complex128, xSizeV float64) *image.RGBA {
-	//height := getHeigh()
-
 	ySize := (height * xSizeV) / width
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
@@ -60,11 +54,12 @@ func buildMandelbrot(z0 complex128, xSizeV float64) *image.RGBA {
 	return img
 }
 
+const (
+	iterations = 200
+	contrast   = 15
+)
+
 func mandelbrotPoint(z complex128, z0 complex128) color.Color {
-	const (
-		iterations = 200
-		contrast   = 15
-	)
 
 	var v = z0
 	for n := uint8(0); n < iterations; n++ {
@@ -72,21 +67,19 @@ func mandelbrotPoint(z complex128, z0 complex128) color.Color {
 		zn := cmplx.Abs(v)
 		if zn > 2 {
 
-			//return color.Gray{255 - contrast*n}
+			//return getGrayPoint(zn, n)
 
-			nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
-			return color.RGBA{20 + nsmooth*n/2, 10 + nsmooth*n, 0 + nsmooth*n, 255 - contrast*n}
-
-			// r2 := math.Pow(cmplx.Abs(v), 2)
-
-			// if r2 > 1000000 {
-			// 	vk := math.Log(r2)
-
-			// 	rgbV := 255 * (1 + math.Cos(2*math.Pi*vk)) / 2
-			// 	rz := uint8(rgbV)
-			// 	return color.RGBA{rz, rz, rz, 0}
-			// }
+			return getColorForPoint(zn, n)
 		}
 	}
 	return color.Black
+}
+
+func getGrayPoint(zn float64, n uint8) color.Color {
+	return color.Gray{255 - contrast*n}
+}
+
+func getColorForPoint(zn float64, n uint8) color.Color {
+	nsmooth := n + 1 - uint8(math.Log(math.Log(zn))/math.Log(2))
+	return color.RGBA{20 + nsmooth*n/2, 10 + nsmooth*n, 0 + nsmooth*n, 255 - contrast*n}
 }
