@@ -15,3 +15,4 @@ debug
 data/
 
 mandelbrot
+config.json
