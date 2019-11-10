@@ -1,14 +1,10 @@
 package mcolor
 
-import (
-	"image/color"
-)
-
 // GetAllFunctions returns map of all color functions
-func GetAllFunctions() map[string]func(z float64, iteration int) color.Color {
-	return map[string]func(z float64, iteration int) color.Color{
-		"grey":   GetGrayPoint,
-		"smooth": GetSmoothForPoint,
-		"retro":  GetSmothRetroPoint,
-	}
-}
+// func GetAllFunctions() map[string]func(result []MandelIterationResult, settings *MandelConstParameters) *image.RGBA {
+// 	return map[string]func(result []MandelIterationResult, settings *MandelConstParameters) *image.RGBA{
+// 		// "grey":   GetGrayPoint,
+// 		// "smooth": GetSmoothForPoint,
+// 		// "retro":  GetSmothRetroPoint,
+// 	}
+// }

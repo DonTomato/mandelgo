@@ -23,3 +23,9 @@ func GetSmoothForPoint(z float64, iteration int) color.Color {
 		A: 255 - uint8(contrast*iteration),
 	}
 }
+
+//func(result []MandelIterationResult, settings *MandelConstParameters) *image.RGBA
+
+func CreateGreyRGBA(data []MandelIterationResult) {
+
+}
