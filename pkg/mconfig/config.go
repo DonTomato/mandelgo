@@ -1,4 +1,4 @@
-package config
+package mconfig
 
 import (
 	"encoding/json"
@@ -13,8 +13,8 @@ import (
 
 // MConfig is a configuration structure
 type MConfig struct {
-	dataPath  string
-	logEnable bool
+	DataPath  string
+	LogEnable bool
 }
 
 var instance *MConfig
@@ -59,7 +59,7 @@ func load() MConfig {
 	result := MConfig{}
 	json.Unmarshal(data, &result)
 
-	if result.logEnable {
+	if result.LogEnable {
 		log.Printf("Config is loaded successfully %v\n", result)
 		fmt.Printf("Config directory: %v\n", dir)
 	}

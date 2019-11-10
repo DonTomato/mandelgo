@@ -6,3 +6,5 @@ Windows
 
 unix
   go build -o ./data/mandelbrot
+
+  sh build.sh
