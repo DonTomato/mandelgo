@@ -22,47 +22,54 @@ var initialized uint32
 var mu sync.Mutex
 
 // Get returns singleton of config of an application
-func Get() *MConfig {
+func Get() (*MConfig, error) {
 	if atomic.LoadUint32(&initialized) == 1 {
-		return instance
+		return instance, nil
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
 
+	var err error
+
 	if initialized == 0 {
-		*instance = load()
-		atomic.StoreUint32(&initialized, 1)
+		instance, err = load()
+		if err != nil {
+			atomic.StoreUint32(&initialized, 1)
+		}
 	}
 
-	return instance
+	return instance, err
 }
 
-func getConfigPath() string {
+func getConfigPath() (string, error) {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return dir
+	return dir, err
 }
 
-func load() MConfig {
-	dir := getConfigPath()
+func load() (*MConfig, error) {
+	dir, err := getConfigPath()
 
-	data, le := ioutil.ReadFile(filepath.Join(dir, "config.json"))
-	if le != nil {
-		log.Fatal(le)
-		panic(le)
+	data, err := ioutil.ReadFile(filepath.Join(dir, "config.json"))
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
 	}
 
-	result := MConfig{}
-	json.Unmarshal(data, &result)
+	result := new(MConfig)
+	err = json.Unmarshal(data, result)
+	if err != nil {
+		return nil, err
+	}
 
 	if result.LogEnable {
 		log.Printf("Config is loaded successfully %v\n", result)
 		fmt.Printf("Config directory: %v\n", dir)
 	}
 
-	return result
+	return result, nil
 }
