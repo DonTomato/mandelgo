@@ -1,5 +1,7 @@
 Run the command Go: Install/Update Tools, select dlv, press Ok to install/update delve
 
+Init
+  go get github.com/icza/mjpeg
 
 Windows 
   go build -o .\..\exec

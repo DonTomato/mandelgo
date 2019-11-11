@@ -41,12 +41,13 @@ func main() {
 	settings := mcalc.MandelConstParameters{Width: 2560, Height: 1440, IterationCount: 200}
 
 	params := mcalc.MandelPictureParameters{
-		GetColorFunc: functions[colorFunc],
-		RealWidth:    4,
-		Settings:     &settings,
-		X:            -0.7,
-		Y:            0,
-		Z0:           complex(0, 0),
+		//GetColorFunc: functions[colorFunc],
+		RealWidth:  4,
+		Settings:   &settings,
+		X:          -0.7,
+		Y:          0,
+		Z0:         complex(0, 0),
+		CreateRGBA: functions[colorFunc],
 	}
 
 	img := mcalc.CreateMandelRGBA(&params)

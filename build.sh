@@ -1,1 +1,1 @@
-go build -o ./run/mnd github.com/dontomato/mandelbrot/cmd/mnd
+go build -o ./run/mnd.exe github.com/dontomato/mandelbrot/cmd/mnd
