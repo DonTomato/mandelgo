@@ -10,7 +10,7 @@ import (
 
 const contrast = 15
 
-// CreateGreyRGBA - returns grey RGBA with contrast = 15
+// CreateGreyRGBA returns grey RGBA with contrast = 15
 func CreateGreyRGBA(data []mcalc.MandelIterationResult, settings *mcalc.MandelConstParameters) *image.RGBA {
 	return createSimpleRGBA(data, settings, func(r mcalc.MandelIterationResult) color.Color {
 		if r.Iteration == settings.IterationCount && r.Z == 0 {
