@@ -42,7 +42,7 @@ func main() {
 	}
 
 	//settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 512}
-	settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 512}
+	settings := mcalc.MandelSettings{Width: 2560 * 2, Height: 1440 * 2, IterationCount: 512}
 
 	params1 := mcalc.MandelPictureParameters{
 		RealWidth:  4,
@@ -54,18 +54,28 @@ func main() {
 	}
 
 	params2 := mcalc.MandelPictureParameters{
-		RealWidth:  0.05,
+		RealWidth:  0.025,
 		Settings:   &settings,
 		X:          -1.25,
-		Y:          -0.075,
+		Y:          -0.072,
 		Z0:         complex(0, 0),
 		CreateRGBA: functions[colorFunc],
 	}
 
-	wg.Add(2)
+	params3 := mcalc.MandelPictureParameters{
+		RealWidth:  0.015,
+		Settings:   &settings,
+		X:          -1.25,
+		Y:          -0.072,
+		Z0:         complex(0, 0),
+		CreateRGBA: functions[colorFunc],
+	}
+
+	wg.Add(3)
 
 	go createFile(&params1, conf.DataPath, 0)
 	go createFile(&params2, conf.DataPath, 1)
+	go createFile(&params3, conf.DataPath, 3)
 
 	wg.Wait()
 }
