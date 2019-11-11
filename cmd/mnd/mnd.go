@@ -38,10 +38,9 @@ func main() {
 		return
 	}
 
-	settings := mcalc.MandelConstParameters{Width: 2560, Height: 1440, IterationCount: 200}
+	settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 200}
 
 	params := mcalc.MandelPictureParameters{
-		//GetColorFunc: functions[colorFunc],
 		RealWidth:  4,
 		Settings:   &settings,
 		X:          -0.7,
