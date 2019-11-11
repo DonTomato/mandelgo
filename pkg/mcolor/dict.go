@@ -12,7 +12,12 @@ func GetAllFunctions() map[string]func(result []mcalc.MandelIterationResult, set
 		"grey":   CreateGreyRGBA,
 		"smooth": CreateSmoothSimpleRGBA,
 
-		"retro": CreateSmoothRetroRGBA,
-		"plan9": CreateSmoothPlan9RGBA,
+		"retro":      CreateSmoothRetroRGBA,
+		"plan9":      CreateSmoothPlan9RGBA,
+		"websafe":    CreateSmoothWebSafeRGBA,
+		"sgrey":      CreateSmoothGreyRGBA,
+		"cont":       CreateSmoothContRGBA,
+		"alternate":  CreateSmoothAlternateRGBA,
+		"blackwhite": CreateSmoothBlackWhiteRGBA,
 	}
 }

@@ -6,11 +6,14 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/dontomato/mandelbrot/pkg/mcalc"
 	"github.com/dontomato/mandelbrot/pkg/mcolor"
 	"github.com/dontomato/mandelbrot/pkg/mconfig"
 )
+
+var wg sync.WaitGroup
 
 func main() {
 	fmt.Println("Mandelbrot set experiments")
@@ -38,7 +41,8 @@ func main() {
 		return
 	}
 
-	settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 200}
+	//settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 512}
+	settings := mcalc.MandelSettings{Width: 2560, Height: 1440, IterationCount: 512}
 
 	params1 := mcalc.MandelPictureParameters{
 		RealWidth:  4,
@@ -50,16 +54,20 @@ func main() {
 	}
 
 	params2 := mcalc.MandelPictureParameters{
-		RealWidth:  0.3,
+		RealWidth:  0.05,
 		Settings:   &settings,
 		X:          -1.25,
-		Y:          -0.1,
+		Y:          -0.075,
 		Z0:         complex(0, 0),
 		CreateRGBA: functions[colorFunc],
 	}
 
-	createFile(&params1, conf.DataPath, 0)
-	createFile(&params2, conf.DataPath, 1)
+	wg.Add(2)
+
+	go createFile(&params1, conf.DataPath, 0)
+	go createFile(&params2, conf.DataPath, 1)
+
+	wg.Wait()
 }
 
 func createFile(params *mcalc.MandelPictureParameters, path string, index int) {
@@ -75,6 +83,9 @@ func createFile(params *mcalc.MandelPictureParameters, path string, index int) {
 	var opt jpeg.Options
 	opt.Quality = 80
 	jpeg.Encode(f, img, &opt)
+	f.Close()
 
 	fmt.Printf("File %v created.\n", fileName)
+
+	wg.Done()
 }

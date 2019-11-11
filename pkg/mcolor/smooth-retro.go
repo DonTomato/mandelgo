@@ -36,3 +36,8 @@ var retro = []color.Color{
 func CreateSmoothPlan9RGBA(data []mcalc.MandelIterationResult, settings *mcalc.MandelSettings) *image.RGBA {
 	return createPaletteRGBA(data, settings, palette.Plan9)
 }
+
+// CreateSmoothWebSafeRGBA returns smooth RGBA with WebSafe palette
+func CreateSmoothWebSafeRGBA(data []mcalc.MandelIterationResult, settings *mcalc.MandelSettings) *image.RGBA {
+	return createPaletteRGBA(data, settings, palette.WebSafe)
+}
