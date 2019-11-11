@@ -11,5 +11,8 @@ func GetAllFunctions() map[string]func(result []mcalc.MandelIterationResult, set
 	return map[string]func(result []mcalc.MandelIterationResult, settings *mcalc.MandelSettings) *image.RGBA{
 		"grey":   CreateGreyRGBA,
 		"smooth": CreateSmoothSimpleRGBA,
+
+		"retro": CreateSmoothRetroRGBA,
+		"plan9": CreateSmoothPlan9RGBA,
 	}
 }
